@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio de sesión</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fafafa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      border: 1px solid #dbdbdb;
+      border-radius: 5px;
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #dbdbdb;
+      border-radius: 3px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #3897f0;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .register-button {
+      margin-top: 10px;
+      color: #003569;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #357ae8;
+    }
+
+    a {
+      text-decoration: none;
+      color: #003569;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="loginForm">
+    <h1>Iniciar sesión</h1>
+    <form id="login" action="/login" method="POST">
+      <input type="text" id="username" name="username" placeholder="Nombre de usuario" required><br>
+      <input type="password" id="password" name="password" placeholder="Contraseña" required><br><br>
+      <button type="submit">Iniciar sesión</button>
+    </form>
+    <p>¿No tienes una cuenta? <a href="#" onclick="toggleForm()">Regístrate aquí</a></p>
+  </div>
+
+  <!-- Formulario de registro -->
+  <div class="container" id="registerForm" style="display: none;">
+    <h1>Registro</h1>
+    <form id="registration" action="/crear_usuario" method="POST">
+      <input type="text" id="nombre" name="nombre" placeholder="Nombre" pattern="[A-Za-z]+" title="El nombre solo puede contener letras" required><br>
+      <input type="text" id="apellido1" name="apellido1" placeholder="Apellido paterno" pattern="[A-Za-z]+" title="El apellido paterno solo puede contener letras" required><br>
+      <input type="text" id="apellido2" name="apellido2" placeholder="Apellido materno" pattern="[A-Za-z]+" title="El apellido materno solo puede contener letras" required><br>
+      <input type="email" id="email" name="email" placeholder="Correo electrónico (ejemplo@gmail.com)" pattern="[a-zA-Z0-9._%+-]+@gmail.com" title="El correo electrónico debe ser de Gmail" required><br>
+      <input type="text" id="nombreUsuario" name="nombreUsuario" placeholder="Nombre de usuario" required><br> <!-- Nuevo campo para el nombre de usuario -->
+      <input type="password" id="password" name="password" placeholder="Contraseña" required><br>
+      <input type="number" id="monedero" name="monedero" placeholder="Monedero virtual" pattern="[0-9]+" title="El monedero virtual solo puede contener números" required><br><br>
+      <button type="submit">Registrarse</button>
+    </form>
+    <p>¿Ya tienes una cuenta? <a href="#" onclick="toggleForm()">Inicia sesión aquí</a></p>
+  </div>
+
+  <script>
+    function toggleForm() {
+      var loginForm = document.getElementById("loginForm");
+      var registerForm = document.getElementById("registerForm");
+      
+      if (loginForm.style.display === "none") {
+        loginForm.style.display = "block";
+        registerForm.style.display = "none";
+      } else {
+        loginForm.style.display = "none";
+        registerForm.style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

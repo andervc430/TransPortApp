@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interfaz de Usuario</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 80%;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    h2 {
+      color: #666;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    select,
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      appearance: none; /* Elimina el estilo predeterminado de las opciones desplegables */
+      -webkit-appearance: none; /* Para navegadores WebKit como Chrome y Safari */
+      -moz-appearance: none; /* Para navegadores basados en Gecko como Firefox */
+    }
+
+    select::-ms-expand {
+      display: none; /* Oculta la flecha desplegable en IE 10 y versiones anteriores */
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Agregar estilo para ocultar la información */
+    .info {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bienvenido, {{ username }}</h1>
+
+    <h2>Rutas Disponibles:</h2>
+    <ul>
+      {% for ruta in rutas %}
+      <li>
+        <select onchange="showInfo(this)">
+          <option value="">Seleccionar Ruta</option>
+          <option value="{{ ruta.Id_Ruta }}">{{ ruta.Origen }} - {{ ruta.Destino }}</option>
+        </select>
+        <div class="info">
+          <p>Parada de Origen: {{ ruta.Parada_Origen_Id }}</p>
+          <p>Parada de Destino: {{ ruta.Parada_Destino_Id }}</p>
+          <p>Paradas: {{ ruta.Paradas }}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <h2>Viajes Realizados:</h2>
+    <ul>
+      {% for viaje in viajes %}
+      <li>{{ viaje.Horario }} - {{ viaje.Fecha_Inicio }} - {{ viaje.Fecha_Fin }}</li>
+      {% endfor %}
+    </ul>
+
+    <form action="/comprar_tiquete" method="POST">
+      <h2>Comprar Tiquete:</h2>
+      <select name="ruta_id">
+        {% for ruta in rutas %}
+        <option value="{{ ruta.Id_Ruta }}">{{ ruta.Origen }} - {{ ruta.Destino }}</option>
+        {% endfor %}
+      </select>
+      <br>
+      Monto: <input type="text" name="monto"> <!-- Agregar un campo para el monto -->
+      <button type="submit">Comprar Tiquete</button>
+    </form>
+  </div>
+
+  <script>
+    function showInfo(select) {
+      var info = select.parentNode.querySelector('.info');
+      if (select.value !== '') {
+        info.style.display = 'block';
+      } else {
+        info.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interfaz del Chofer</title>
+<style>
+  /* Estilos simples para la interfaz */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  #map {
+    height: 400px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .button {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+  <h1>Panel del Chofer</h1>
+  <div id="map"></div>
+  <div>
+    <p>Ubicación actual del vehículo: <span id="ubicacion"></span></p>
+    <p>Llegada: <span id="llegada">Tiempo estimado</span></p>
+    <p>Pasajeros a bordo: <span id="pasajeros">0/50</span></p>
+    <button class="button" onclick="disminuirPasajero()">Disminuir pasajero</button>
+  </div>
+  <div>
+    <input type="radio" id="deSanJoseALiberia" name="viaje" value="deSanJoseALiberia" onchange="actualizarDatos()">
+    <label for="deSanJoseALiberia">De San José a Liberia</label><br>
+    <input type="radio" id="deLiberiaASanJose" name="viaje" value="deLiberiaASanJose" onchange="actualizarDatos()">
+    <label for="deLiberiaASanJose">De Liberia a San José</label><br>
+  </div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.css" />
+
+<script>
+  // Simulación de datos de ubicación y capacidad
+  let ubicacionActual = "San Jose, Costa Rica";
+  let llegadaDestino = "4 horas"; // Tiempo estimado de llegada al destino
+  let capacidadActual = 50; // Capacidad inicial del vehículo
+  let pasajerosABordo = Math.floor(Math.random() * (50 - 30 + 1)) + 30; // Cantidad inicial de pasajeros entre 30 y 50
+
+  // Función para actualizar la interfaz con los datos actuales
+  function actualizarInterfaz() {
+    document.getElementById("ubicacion").innerText = ubicacionActual;
+    document.getElementById("llegada").innerText = llegadaDestino;
+    document.getElementById("pasajeros").innerText = pasajerosABordo + "/" + capacidadActual;
+  }
+
+  // Función para disminuir la cantidad de pasajeros
+  function disminuirPasajero() {
+    if (pasajerosABordo > 0) {
+      pasajerosABordo--;
+      actualizarInterfaz();
+    }
+  }
+
+  // Simulación de actualización automática de datos
+  setInterval(() => {
+    // Simular movimiento del vehículo
+    if (document.getElementById("deSanJoseALiberia").checked) {
+      ubicacionActual = "En ruta a Liberia, Guanacaste, Costa Rica";
+    } else {
+      ubicacionActual = "En ruta a San José, Costa Rica";
+    }
+    // Actualizar la interfaz con los nuevos datos
+    actualizarInterfaz();
+  }, 5000); // Actualizar cada 5 segundos inicialmente
+
+  // Inicializar la interfaz con los datos iniciales
+  actualizarInterfaz();
+
+  // Carga el mapa de OpenStreetMap
+  function initMap() {
+    const map = L.map('map').setView([10.635, -85.440], 8); // Define la posición inicial del mapa y el nivel de zoom
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+    }).addTo(map);
+
+    let inicio, fin;
+
+    if (document.getElementById("deSanJoseALiberia").checked) {
+      inicio = [9.934739, -84.087502]; // San José
+      fin = [10.635, -85.440]; // Liberia
+    } else {
+      inicio = [10.635, -85.440]; // Liberia
+      fin = [9.934739, -84.087502]; // San José
+    }
+
+    L.Routing.control({
+      waypoints: [
+        L.latLng(inicio),
+        L.latLng(fin)
+      ],
+      routeWhileDragging: true
+    }).addTo(map);
+  }
+
+  // Función para actualizar los datos al cambiar la ruta seleccionada
+  function actualizarDatos() {
+    if (document.getElementById("deSanJoseALiberia").checked) {
+      ubicacionActual = "San Jose, Costa Rica";
+      llegadaDestino = "Liberia, Guanacaste, Costa Rica";
+    } else {
+      ubicacionActual = "Liberia, Guanacaste, Costa Rica";
+      llegadaDestino = "San Jose, Costa Rica";
+    }
+    pasajerosABordo = Math.floor(Math.random() * (50 - 30 + 1)) + 30; // Cambiar la cantidad de pasajeros
+    actualizarInterfaz();
+    initMap(); // Reinicializar el mapa con la nueva ruta seleccionada
+    alert("En ruta a " + llegadaDestino); // Mostrar un mensaje indicando la nueva ruta seleccionada
+  }
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

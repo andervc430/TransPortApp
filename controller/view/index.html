@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TransportApp</title>
+    <!-- Aquí puedes incluir enlaces a archivos CSS externos, por ejemplo: -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Bienvenido a TransportApp</h1>
+    <!-- Aquí puedes incluir contenido dinámico generado por Flask, por ejemplo: -->
+    <ul>
+        {% for item in data %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+    <!-- Aquí puedes incluir enlaces a archivos JavaScript externos, por ejemplo: -->
+    <script src="script.js"></script>
+</body>
+</html>
+
